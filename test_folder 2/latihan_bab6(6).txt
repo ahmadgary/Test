@@ -1,0 +1,12 @@
+Aplikasi Manajemen Tugas (To-Do List)
+
+Deskripsi: Aplikasi ini memungkinkan pengguna untuk menambahkan, menghapus, dan menampilkan daftar tugas yang perlu diselesaikan. Tugas-tugas tersebut disimpan dalam array.
+
+Fitur:
+
+Menambah Tugas: Pengguna dapat menambahkan tugas baru ke dalam daftar.
+Menghapus Tugas: Pengguna dapat menghapus tugas berdasarkan indeks atau nama tugas.
+Menampilkan Tugas: Menampilkan semua tugas yang ada dalam daftar.
+Menandai Tugas Selesai: Pengguna dapat menandai tugas sebagai selesai.
+
+Cara Penggunaan: Pengguna dapat memanggil fungsi sesuai kebutuhan untuk mengelola daftar tugas mereka
