@@ -88,7 +88,7 @@ class FlappyBird:
             self.root.after(16, self.update)
 
     def tampilkan_tombol_ulangi(self):
-        self.tombol_ulangi = tk.Button(self.root, text="Ulangi", command=self.restart_game, font=("Arial", 14), bg="red", fg="white")
+        self.tombol_ulangi = tk.Button(self.root, text="Restart", command=self.restart_game, font=("Arial", 14), bg="red", fg="white")
         self.tombol_ulangi.place(relx=0.5, rely=0.5, anchor="center")
 
     def restart_game(self):
