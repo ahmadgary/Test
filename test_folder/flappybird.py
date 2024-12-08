@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import PhotoImage
 from PIL import Image, ImageTk
 import random
 
@@ -8,7 +7,7 @@ layar_lebar = 400
 layar_tinggi = 600
 pipi_lebar = 80
 pipi_tinggi = 200  # Sesuaikan tinggi pipa
-burung_ukuran = 30
+burung_ukuran = 60  # Mengubah ukuran burung menjadi sedang
 gravitasi = 0.2
 kecepatan_lompat = -6
 
@@ -56,7 +55,7 @@ class FlappyBird:
 
         self.burung = self.canvas.create_image(self.burung_x, self.burung_y, anchor="nw", image=self.burung_image)
         self.pipi_atas = self.canvas.create_rectangle(self.pipi_x, 0, self.pipi_x + pipi_lebar, self.pipi_y_atas, fill="grey")
-        self.pipi_bawah = self.canvas.create_rectangle(self.pipi_x, self.pipi_y_bawah, self.pipi_x + pipi_lebar, layar_tinggi, fill= "grey")
+        self.pipi_bawah = self.canvas.create_rectangle(self.pipi_x, self.pipi_y_bawah, self.pipi_x + pipi_lebar, layar_tinggi, fill="grey")
         self.teks_skor = self.canvas.create_text(layar_lebar // 2, 50, text="Skor: 0", font=("Arial", 24))
 
     def lompat(self, event):
