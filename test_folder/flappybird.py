@@ -6,7 +6,8 @@ import random
 layar_lebar = 400
 layar_tinggi = 600
 pipi_lebar = 80
-pipi_tinggi = 200  # Sesuaikan tinggi pipa
+pipi_tinggi_min = 100  # Tinggi minimum pipa
+pipi_tinggi_max = 300  # Tinggi maksimum pipa
 burung_ukuran = 60  # Mengubah ukuran burung menjadi sedang
 gravitasi = 0.2
 kecepatan_lompat = -6
@@ -48,8 +49,7 @@ class FlappyBird:
         self.burung_vy = 0
 
         self.pipi_x = layar_lebar
-        self.pipi_y_atas = random.randint(50, layar_tinggi - pipi_tinggi - 150)
-        self.pipi_y_bawah = self.pipi_y_atas + pipi_tinggi + 150
+        self.update_pipes()
 
         self.skor = 0
 
@@ -72,8 +72,7 @@ class FlappyBird:
 
         if self.pipi_x < -pipi_lebar:
             self.pipi_x = layar_lebar
-            self.pipi_y_atas = random.randint(50, layar_tinggi - pipi_tinggi - 150)
-            self.pipi_y_bawah = self.pipi_y_atas + pipi_tinggi + 150
+            self.update_pipes()
             self.skor += 1
             self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
 
@@ -85,6 +84,11 @@ class FlappyBird:
             self.tampilkan_tombol_ulangi()
         else:
             self.root.after(16, self.update)
+
+    def update_pipes(self):
+        # Mengatur ukuran pipa secara acak
+        self.pipi_y_atas = random.randint(50, layar_tinggi - pipi_tinggi_min - 150)
+        self.pipi_y_bawah = self.pipi_y_atas + random.randint(pipi_tinggi_min, pipi_tinggi_max) + 150
 
     def tampilkan_tombol_ulangi(self):
         self.tombol_ulangi = tk.Button(self.root, text="Restart", command=self.restart_game, font=("Arial", 14), bg="red", fg="white")
