@@ -3,14 +3,15 @@ from PIL import Image, ImageTk
 import random
 
 # Konfigurasi
-layar_lebar = 400
-layar_tinggi = 600
-pipi_lebar = 80
+layar_lebar = 800  # Perbesar lebar layar
+layar_tinggi = 800  # Perbesar tinggi layar
+pipi_lebar = 100  # Perbesar lebar pipa
 pipi_tinggi_min = 100  # Tinggi minimum pipa
-pipi_tinggi_max = 300  # Tinggi maksimum pipa
-burung_ukuran = 60  # Mengubah ukuran burung menjadi sedang
+pipi_tinggi_max = 200  # Tinggi maksimum pipa
+jarak_pipa = 20  # Jarak antara pipa atas dan pipa bawah (diperkecil)
+burung_ukuran = 50  # Perbesar ukuran burung
 gravitasi = 0.2
-kecepatan_lompat = -6
+kecepatan_lompat = -4
 
 class FlappyBird:
     def __init__(self):
@@ -66,7 +67,7 @@ class FlappyBird:
         self.burung_vy += gravitasi
         self.canvas.coords(self.burung, self.burung_x, self.burung_y)
 
-        self.pipi_x -= 2
+        self.pipi_x -= 3  # Tambahkan sedikit kecepatan pipa agar seimbang dengan layar yang lebih besar
         self.canvas.coords(self.pipi_atas, self.pipi_x, 0, self.pipi_x + pipi_lebar, self.pipi_y_atas)
         self.canvas.coords(self.pipi_bawah, self.pipi_x, self.pipi_y_bawah, self.pipi_x + pipi_lebar, layar_tinggi)
 
@@ -87,8 +88,8 @@ class FlappyBird:
 
     def update_pipes(self):
         # Mengatur ukuran pipa secara acak
-        self.pipi_y_atas = random.randint(50, layar_tinggi - pipi_tinggi_min - 150)
-        self.pipi_y_bawah = self.pipi_y_atas + random.randint(pipi_tinggi_min, pipi_tinggi_max) + 150
+        self.pipi_y_atas = random.randint(50, layar_tinggi - pipi_tinggi_min - jarak_pipa)
+        self.pipi_y_bawah = self.pipi_y_atas + random.randint(pipi_tinggi_min, pipi_tinggi_max) + jarak_pipa
 
     def tampilkan_tombol_ulangi(self):
         self.tombol_ulangi = tk.Button(self.root, text="Restart", command=self.restart_game, font=("Arial", 14), bg="red", fg="white")
