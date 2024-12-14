@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 import random
+import pygame  # Tambahkan impor pygame
 
 # Konfigurasi
 layar_lebar = 800  # Perbesar lebar layar
@@ -15,6 +16,11 @@ kecepatan_lompat = -4
 
 class FlappyBird:
     def __init__(self):
+        # Inisialisasi Pygame Mixer untuk musik
+        pygame.mixer.init()
+        pygame.mixer.music.load("test_folder/music.mp3")
+        pygame.mixer.music.play(-1)  # Mainkan musik berulang kali
+
         self.root = tk.Tk()
         self.root.geometry(f"{layar_lebar}x{layar_tinggi}")
         self.canvas = tk.Canvas(self.root, width=layar_lebar, height=layar_tinggi)
