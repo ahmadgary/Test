@@ -1,33 +1,35 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 import random
-import pygame  # Tambahkan impor pygame
+import pygame  # Modul untuk memutar musik
 
 # Konfigurasi
-layar_lebar = 800  # Perbesar lebar layar
-layar_tinggi = 800  # Perbesar tinggi layar
-pipi_lebar = 100  # Perbesar lebar pipa
-pipi_tinggi = 200  # Tinggi pipa default
-jarak_pipa_vertikal = 100  # Jarak vertikal antara pipa atas dan pipa bawah
-jarak_pipa_horizontal = 400  # Jarak horizontal antara pipa yang berturut-turut
-burung_ukuran = 50  # Perbesar ukuran burung
+layar_lebar = 800
+layar_tinggi = 800
+pipi_lebar = 100
+pipi_tinggi = 200
+jarak_pipa_vertikal = 100
+jarak_pipa_horizontal = 400
+burung_ukuran = 50
 gravitasi = 0.2
 kecepatan_lompat = -4
 
 class FlappyBird:
     def __init__(self):
-        # Inisialisasi Pygame Mixer untuk musik
-        pygame.mixer.init()
-        pygame.mixer.music.load("test_folder/music.mp3")
-        pygame.mixer.music.play(-1)  # Mainkan musik berulang kali
-
+        # Inisialisasi Tkinter dan Canvas
         self.root = tk.Tk()
         self.root.geometry(f"{layar_lebar}x{layar_tinggi}")
         self.canvas = tk.Canvas(self.root, width=layar_lebar, height=layar_tinggi)
         self.canvas.pack()
 
-        self.load_and_resize_images()  # Panggil fungsi untuk memuat dan mengubah ukuran gambar
+        # Inisialisasi pygame mixer untuk musik
+        pygame.mixer.init()
+        pygame.mixer.music.load("test_folder/music.mp3")  # Ganti dengan nama file musik Anda
+        pygame.mixer.music.set_volume(0.5)  # Atur volume (0.0 hingga 1.0)
+        pygame.mixer.music.play(-1)  # Musik akan diputar terus-menerus (-1 untuk loop)
 
+        # Load gambar dan memulai permainan
+        self.load_and_resize_images()
         self.init_game()
 
         self.root.bind("<space>", self.lompat)
@@ -97,19 +99,20 @@ class FlappyBird:
             self.skor += 1
             self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
 
+        # Kondisi Game Over
         if (self.burung_y < 0 or self.burung_y > layar_tinggi - burung_ukuran or
             (self.burung_x + burung_ukuran > self.pipi_x1 and self.burung_x < self.pipi_x1 + pipi_lebar and
              (self.burung_y < self.pipi_y_atas1 or self.burung_y + burung_ukuran > self.pipi_y_bawah1)) or
             (self.burung_x + burung_ukuran > self.pipi_x2 and self.burung_x < self.pipi_x2 + pipi_lebar and
              (self.burung_y < self.pipi_y_atas2 or self.burung_y + burung_ukuran > self.pipi_y_bawah2))):
             self.canvas.itemconfig(self.teks_skor, text=f"Game Over! Skor: {self.skor}")
+            pygame.mixer.music.stop()  # Hentikan musik
             self.root.unbind("<space>")
             self.tampilkan_tombol_ulangi()
         else:
             self.root.after(16, self.update)
 
     def generate_pipe_heights(self):
-        # Mengatur posisi pipa dengan jarak vertikal tetap
         pipa_y_atas = random.randint(50, layar_tinggi - pipi_tinggi - jarak_pipa_vertikal)
         pipa_y_bawah = pipa_y_atas + pipi_tinggi + jarak_pipa_vertikal
         return pipa_y_atas, pipa_y_bawah
@@ -120,12 +123,14 @@ class FlappyBird:
 
     def restart_game(self):
         self.tombol_ulangi.destroy()
+        pygame.mixer.music.play(-1)  # Memulai ulang musik
         self.init_game()
         self.root.bind("<space>", self.lompat)
         self.update()
 
     def run(self):
         self.root.mainloop()
+
 
 if __name__ == "__main__":
     game = FlappyBird()
