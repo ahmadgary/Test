@@ -64,6 +64,8 @@ class FlappyBird:
         self.pipi_y_atas2, self.pipi_y_bawah2 = self.generate_pipe_heights()
 
         self.skor = 0
+        self.pipa_lewat1 = False
+        self.pipa_lewat2 = False
 
         self.burung = self.canvas.create_image(self.burung_x, self.burung_y, anchor="nw", image=self.burung_image)
         self.pipi1_atas = self.canvas.create_rectangle(self.pipi_x1, 0, self.pipi_x1 + pipi_lebar, self.pipi_y_atas1, fill="grey")
@@ -87,17 +89,26 @@ class FlappyBird:
         self.canvas.coords(self.pipi2_atas, self.pipi_x2, 0, self.pipi_x2 + pipi_lebar, self.pipi_y_atas2)
         self.canvas.coords(self.pipi2_bawah, self.pipi_x2, self.pipi_y_bawah2, self.pipi_x2 + pipi_lebar, layar_tinggi)
 
+        # Tambahkan logika untuk skor agar bertambah saat burung melewati pipa
+        if self.burung_x > self.pipi_x1 + pipi_lebar and not self.pipa_lewat1:
+            self.skor += 1
+            self.pipa_lewat1 = True
+            self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
+
+        if self.burung_x > self.pipi_x2 + pipi_lebar and not self.pipa_lewat2:
+            self.skor += 1
+            self.pipa_lewat2 = True
+            self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
+
         if self.pipi_x1 < -pipi_lebar:
             self.pipi_x1 = layar_lebar
             self.pipi_y_atas1, self.pipi_y_bawah1 = self.generate_pipe_heights()
-            self.skor += 1
-            self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
+            self.pipa_lewat1 = False
 
         if self.pipi_x2 < -pipi_lebar:
             self.pipi_x2 = layar_lebar
             self.pipi_y_atas2, self.pipi_y_bawah2 = self.generate_pipe_heights()
-            self.skor += 1
-            self.canvas.itemconfig(self.teks_skor, text=f"Skor: {self.skor}")
+            self.pipa_lewat2 = False
 
         # Kondisi Game Over
         if (self.burung_y < 0 or self.burung_y > layar_tinggi - burung_ukuran or
