@@ -4,7 +4,7 @@ from tkinter import Frame, Label
 from PIL import Image, ImageTk
 
 master = tk.Tk()
-master.title("Form Data")
+master.title("Angkringan Murah")
 master.config(bg="brown")
 
 # Function to save data
